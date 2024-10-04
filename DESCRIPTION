@@ -16,3 +16,5 @@ Imports:
     boot,
     statmod,
     stats
+URL: https://github.com/canyi-chen/abmediation
+BugReports: https://github.com/canyi-chen/abmediation/issues
