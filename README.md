@@ -4,7 +4,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of abmediation is to test no mediation effect via adaptive bootstrap under several (generalized) linear model.
+The goal of abmediation is to assess whether and how a specific exposure affects the outcome of interest through intermediate variables using adaptive bootstrap. The adaptive method considers the composite structure of no mediation effect, resulting in calibrated type I error and improved statistical power. For more information, refer to He et al. (2024) <doi:10.1093/jrsssb/qkad129>.
 
 ## Installation
 
