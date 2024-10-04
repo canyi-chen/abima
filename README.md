@@ -4,7 +4,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of abmediation is to ...
+The goal of abmediation is to test no mediation effect via adaptive bootstrap under several (generalized) linear model.
 
 ## Installation
 
