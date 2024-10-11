@@ -1,5 +1,5 @@
 
-# abmediation
+# abmed
 
 <!-- badges: start -->
 <!-- badges: end -->

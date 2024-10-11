@@ -12,17 +12,17 @@ compute_stat_GLM_LM <- function(boot_data, M.family, s = 1, s_star = 0, covariat
                                                                         collapse = "+")))
   mediator_reg_formula <- stats::as.formula(paste0("mediator", "~", paste(c("exposure", covariates), collapse = "+")))
 
-  lm_alpha_tmp <-
+  glm_alpha_fit <-
     stats::glm(mediator_reg_formula,
                family = M.family,
                data = boot_data)
-  lm_alpha <- summary(lm_alpha_tmp)
-  result_alpha <- lm_alpha$coefficients
+  glm_alpha_summary <- summary(glm_alpha_fit)
+  result_alpha <- glm_alpha_summary$coefficients
   alpha_hat <- result_alpha["exposure", "Estimate"]
   alpha_int_hat <- result_alpha["(Intercept)", "Estimate"]
   z_alpha <- result_alpha["exposure", 3]
   alpha_vec_hat <- result_alpha[-c(1, 2), "Estimate"]
-  dispersion_hat <- summary(lm_alpha_tmp)$dispersion
+  dispersion_hat <- summary(glm_alpha_fit)$dispersion
 
   g_alpha_hat <- linkinv_func(alpha_hat * s +
                                 alpha_int_hat +
@@ -31,18 +31,18 @@ compute_stat_GLM_LM <- function(boot_data, M.family, s = 1, s_star = 0, covariat
                                   alpha_int_hat +
                                   crossprod(covariates_new, alpha_vec_hat))
   d_g_alpha_hat <- g_alpha_hat - g_alpha_hat_0
-  g_alpha_fit_values <- lm_alpha_tmp$fitted.values
-  alpha_residual <- boot_data$mediator - lm_alpha_tmp$fitted.values
+  g_alpha_fit_values <- glm_alpha_fit$fitted.values
+  alpha_residual <- boot_data$mediator - glm_alpha_fit$fitted.values
 
   ########################################
   #2. fit lm: beta coefficient
   ########################################
-  lm_beta <-
+  lm_beta_summary <-
     summary(stats::lm(outcome_reg_formula, data = boot_data))
-  result_beta <- lm_beta$coefficients
+  result_beta <- lm_beta_summary$coefficients
   beta_hat <- result_beta["mediator", "Estimate"]
   z_beta <- result_beta["mediator", "t value"]
-  beta_residual <- lm_beta$residuals
+  beta_residual <- lm_beta_summary$residuals
 
   # get projected M after bootstrap
   M_proj_boot <-
