@@ -1,4 +1,4 @@
-Package: abmediation
+Package: abmed
 Title: Test Mediation Effect via Adaptive Bootstrap with Enhanced Statistical Power
 Version: 0.0.0.9000
 Authors@R: 
@@ -14,7 +14,6 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Imports: 
     boot,
-    statmod,
     stats
 URL: https://github.com/canyi-chen/abmediation
 BugReports: https://github.com/canyi-chen/abmediation/issues

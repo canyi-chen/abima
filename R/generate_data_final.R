@@ -5,10 +5,10 @@
 #' @param beta_M the parameter in Y~S+M
 #' @param M.family a description of the error distribution and link function to be used in the mediator model. This is the
 #' result of a call to a family function. (See \code{\link{family}} for detials of family functions.) The default
-#' family is gaussian().
+#' family is \code{\link{gaussian}}.
 #' @param Y.family a description of the error distribution and link function to be used in the outcome model. This is the
 #' result of a call to a family function. (See \code{\link{family}} for detials of family functions.) The default
-#' family is gaussian().
+#' family is \code{\link{gaussian}}.
 #' @param sigma_M the noise level for M~S
 #' @param sigma_Y the noise level for Y~S+M
 #'
@@ -17,22 +17,21 @@
 #' \item{M}{mediator}
 #' \item{Y}{outcome}
 #' \item{X}{confounder}
-#'
 #' @export
 generate_all_data <- function(n = 200,
                               alpha_S = 0,
                               beta_M = 0,
-                              M.family = gaussian(),
-                              Y.family = gaussian(),
+                              M.family = stats::gaussian(),
+                              Y.family = stats::gaussian(),
                               sigma_M = 0.5,
                               sigma_Y = 0.5) {
   if ((M.family$family == "gaussian") &
       (Y.family$family == "gaussian")) {
-    S <- rbinom(n, 1, 1 / 2)
-    X1 <- rnorm(n)
-    X2 <- rbinom(n, 1, 1 / 2)
-    eps_M <- rnorm(n, 0, sd = sigma_M)
-    eps_Y <- rnorm(n, 0, sd = sigma_Y)
+    S <- stats::rbinom(n, 1, 1 / 2)
+    X1 <- stats::rnorm(n)
+    X2 <- stats::rbinom(n, 1, 1 / 2)
+    eps_M <- stats::rnorm(n, 0, sd = sigma_M)
+    eps_Y <- stats::rnorm(n, 0, sd = sigma_Y)
 
     alpha_vec <- c(1, 1, 1)
     beta_vec <- c(1, 1, 1)
@@ -72,14 +71,14 @@ generate_all_data <- function(n = 200,
     tauS <- 1
 
     #1. generate exposure
-    S <- rbinom(n, 1, 0.5)
+    S <- stats::rbinom(n, 1, 0.5)
     # S <- rnorm(n)
-    X <- rbinom(n, 1, 0.5)
+    X <- stats::rbinom(n, 1, 0.5)
 
     #2. generate mediator
     mu_vec <- S * alpha_S + alpha_int + alpha_cov * X
     mu_logit <- logit_transform_fun(mu_vec)
-    M <- rbinom(n, size = 1, prob = mu_logit)
+    M <- stats::rbinom(n, size = 1, prob = mu_logit)
 
     #3. generate outcome
     mean_y <- M * beta_M +
@@ -87,7 +86,7 @@ generate_all_data <- function(n = 200,
       beta_cov * X +
       tauS * S
     mean_y_logit <- logit_transform_fun(mean_y)
-    Y <- rbinom(n, size = 1, prob = mean_y_logit)
+    Y <- stats::rbinom(n, size = 1, prob = mean_y_logit)
 
     return(list(
       S = S,
@@ -105,18 +104,18 @@ generate_all_data <- function(n = 200,
     tauS <- 1
 
     #1. generate exposure
-    S <- rbinom(n, 1, 0.5)
-    X <- rbinom(n, 1, 0.5)
+    S <- stats::rbinom(n, 1, 0.5)
+    X <- stats::rbinom(n, 1, 0.5)
 
     #2. generate mediator
     mu_vec <- S * alpha_S + alpha_int + alpha_cov * X
     mu_logit <- logit_transform_fun(mu_vec)
-    M <- rbinom(n, size = 1, prob = mu_logit)
+    M <- stats::rbinom(n, size = 1, prob = mu_logit)
 
     #3. generate outcome
     sigma_sd = 0.5
     mean_y <- M * beta_M + beta_int + beta_cov * X + tauS * S
-    Y <- mean_y + rnorm(n, 0, sigma_sd)
+    Y <- mean_y + stats::rnorm(n, 0, sigma_sd)
 
     return(list(
       S = S,
@@ -135,26 +134,26 @@ generate_all_data <- function(n = 200,
     tauS <- 1
 
     #1. generate exposure
-    S <- rbinom(n, 1, 0.5)
+    S <- stats::rbinom(n, 1, 0.5)
     # X <- rbinom(n, 1, 0.5)
-    X <- rnorm(n, 0, 2)
+    X <- stats::rnorm(n, 0, 2)
 
     #2. generate mediator
     mu_vec <- S * alpha_S + alpha_int + alpha_cov * X
     mu_logit <- M.family$linkinv(mu_vec) #logit_transform_fun(mu_vec)
     if (M.family$family == "binomial" |
         M.family$family == "quasibinomial") {
-      M <- rbinom(n, size = 1, prob =
+      M <- stats::rbinom(n, size = 1, prob =
                     mu_logit)
     } else if (M.family$family == "Gamma") {
-      X <- rbinom(n, 1, 0.5)
+      X <- stats::rbinom(n, 1, 0.5)
       mu_vec <- S * alpha_S + alpha_int + alpha_cov * X
       mu_logit <- M.family$linkinv(mu_vec) #logit_transform_fun(mu_vec)
-      M <- rgamma(n, shape = 1, scale = mu_logit)
+      M <- stats::rgamma(n, shape = 1, scale = mu_logit)
     } else if (M.family$family == "poisson") {
-      M <- rpois(n, lambda = mu_logit)
+      M <- stats::rpois(n, lambda = mu_logit)
     } else if (M.family$family == "gaussian") {
-      M <- rnorm(n, mean = mu_logit)
+      M <- stats::rnorm(n, mean = mu_logit)
     }  else {
       stop("Unsupported families.")
     }
@@ -163,7 +162,7 @@ generate_all_data <- function(n = 200,
     #3. generate outcome
     sigma_sd = 0.5
     mean_y <- M * beta_M + beta_int + beta_cov * X + tauS * S
-    Y <- mean_y + rnorm(n, 0, sigma_sd)
+    Y <- mean_y + stats::rnorm(n, 0, sigma_sd)
 
     return(list(
       S = S,

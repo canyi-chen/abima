@@ -8,8 +8,8 @@ generate_all_data(
   n = 200,
   alpha_S = 0,
   beta_M = 0,
-  M.family = gaussian(),
-  Y.family = gaussian(),
+  M.family = stats::gaussian(),
+  Y.family = stats::gaussian(),
   sigma_M = 0.5,
   sigma_Y = 0.5
 )
@@ -23,11 +23,11 @@ generate_all_data(
 
 \item{M.family}{a description of the error distribution and link function to be used in the mediator model. This is the
 result of a call to a family function. (See \code{\link{family}} for detials of family functions.) The default
-family is gaussian().}
+family is \code{\link{gaussian}}.}
 
 \item{Y.family}{a description of the error distribution and link function to be used in the outcome model. This is the
 result of a call to a family function. (See \code{\link{family}} for detials of family functions.) The default
-family is gaussian().}
+family is \code{\link{gaussian}}.}
 
 \item{sigma_M}{the noise level for M~S}
 

@@ -1,10 +1,10 @@
 \dontrun{
   ## Load libraries
-  library(abmediation)
+  library(abmed)
 
   if (require(future.apply)) {
     library(future.apply)
-    plan(multisession, workers = 4)
+    plan(multisession, workers = 12)
   } else {
     future_replicate <- replicate
   }
@@ -16,7 +16,7 @@
 
   simulation <- function(alpha_S = 0, beta_M = 0) {
     data <- generate_all_data(
-      n = 500,
+      n = 200,
       alpha_S = alpha_S,
       beta_M = beta_M,
       M.family = M.family,
@@ -27,13 +27,11 @@
     Y <- data$Y
     X <- data$X
 
-    out <- ab.mediation(
+    out <- abYlm.Mlm(
       S,
       M,
       Y,
       X,
-      M.family = M.family,
-      Y.family = Y.family,
       lambda = 2,
       B = 199
     )

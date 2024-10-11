@@ -1,5 +1,10 @@
-^abmediation\.Rproj$
+^abmed\.Rproj$
 ^\.Rproj\.user$
-^abmediation\.archive$
-^abmediation\Sim$
+^abmed\.archive$
+^abmed\Sim$
 ^LICENSE\.md$
+^cran-comments\.md$
+^notebook$
+^Sim$
+^.idea$
+^.archive$
