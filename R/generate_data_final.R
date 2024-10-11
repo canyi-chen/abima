@@ -56,10 +56,7 @@ generate_all_data <- function(n = 200,
       X = X
     ))
   }
-  logit_transform_fun <- M.family$linkinv
-  # logit_deriv <- function(x) deriv_inverse.link(M.family$linkinv(x),M.family$link)
-  logit_deriv <- function(x)
-    M.family$mu.eta(x)
+  linkinv <- M.family$linkinv
 
   if (M.family$family == "binomial" &
       Y.family$family == "binomial") {
@@ -77,7 +74,7 @@ generate_all_data <- function(n = 200,
 
     #2. generate mediator
     mu_vec <- S * alpha_S + alpha_int + alpha_cov * X
-    mu_logit <- logit_transform_fun(mu_vec)
+    mu_logit <- linkinv(mu_vec)
     M <- stats::rbinom(n, size = 1, prob = mu_logit)
 
     #3. generate outcome
@@ -85,7 +82,7 @@ generate_all_data <- function(n = 200,
       beta_int +
       beta_cov * X +
       tauS * S
-    mean_y_logit <- logit_transform_fun(mean_y)
+    mean_y_logit <- linkinv(mean_y)
     Y <- stats::rbinom(n, size = 1, prob = mean_y_logit)
 
     return(list(
@@ -109,7 +106,7 @@ generate_all_data <- function(n = 200,
 
     #2. generate mediator
     mu_vec <- S * alpha_S + alpha_int + alpha_cov * X
-    mu_logit <- logit_transform_fun(mu_vec)
+    mu_logit <- linkinv(mu_vec)
     M <- stats::rbinom(n, size = 1, prob = mu_logit)
 
     #3. generate outcome
