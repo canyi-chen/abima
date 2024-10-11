@@ -42,7 +42,6 @@ abYlm.Mlm(
   M,
   Y,
   X,
-  lambda = 2,
   B = 199
 )
 ```
@@ -76,7 +75,6 @@ abYlm.Mglm(
   Y,
   X,
   M.family = M.family,
-  lambda = 2,
   B = 199
 )
 ```
@@ -120,7 +118,6 @@ simulation <- function(alpha_S = 0, beta_M = 0) {
     M,
     Y,
     X,
-    lambda = 2,
     B = 199
   )
   out
