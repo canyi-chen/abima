@@ -2,7 +2,7 @@
 % Please edit documentation in R/abYlm.Mglm.R
 \name{abYlm.Mglm}
 \alias{abYlm.Mglm}
-\title{Adaptive bootstrap for mediation analysis}
+\title{Adaptive Bootstrap for Mediation Analysis with Linear Models and Generalized Linear Models}
 \usage{
 abYlm.Mglm(
   S,
@@ -51,8 +51,7 @@ mediation_effect the estimated mediation effect between s and s_star (conditioni
 p_value the p value.
 }
 \description{
-\code{ab.mediation} is used for testing no mediation effect via adaptive bootstrap under several (generalized)
-linear model.
+\code{abYlm.Mglm} conducts adaptive bootstrap for mediation analysis with the generalized linear model on the mediator M and the linear model on the outcome Y. The family of the generalized linear model is specified with \code{M.family}.
 }
 \examples{
 \dontrun{
@@ -152,5 +151,5 @@ abline(0, 1, col = "orange")
 
 }
 \references{
-\url{https://academic.oup.com/jrsssb/advance-article/doi/10.1093/jrsssb/qkad129/7420463}
+He, Y., Song, P. X. K., and Xu, G. (2023), “Adaptive bootstrap tests for composite null hypotheses in the mediation pathway analysis,” Journal of the Royal Statistical Society Series B: Statistical Methodology, qkad129. \url{https://doi.org/10.1093/jrsssb/qkad129}.
 }

@@ -1,8 +1,7 @@
-#' Adaptive bootstrap for mediation analysis
+#' Adaptive Bootstrap for Mediation Analysis with Linear Models and Generalized Linear Models
 #'
 #' @description
-#' \code{ab.mediation} is used for testing no mediation effect via adaptive bootstrap under several (generalized)
-#' linear model.
+#' \code{abYlm.Mglm} conducts adaptive bootstrap for mediation analysis with the generalized linear model on the mediator M and the linear model on the outcome Y. The family of the generalized linear model is specified with \code{M.family}.
 #'
 #' @param S a n-by-1 matrix for exposure.
 #' @param M a n-by-m matrix for mediator, each row corresponding to an observation. The dimension m could be 1 or
@@ -22,7 +21,7 @@
 #'
 #' @returns mediation_effect the estimated mediation effect between s and s_star (conditioning on the covariates_new).
 #' @returns p_value the p value.
-#' @references \url{https://academic.oup.com/jrsssb/advance-article/doi/10.1093/jrsssb/qkad129/7420463}
+#' @references He, Y., Song, P. X. K., and Xu, G. (2023), “Adaptive bootstrap tests for composite null hypotheses in the mediation pathway analysis,” Journal of the Royal Statistical Society Series B: Statistical Methodology, qkad129. \url{https://doi.org/10.1093/jrsssb/qkad129}.
 #' @example man/examples/example_abYlm.Mglm.R
 #'
 #' @export

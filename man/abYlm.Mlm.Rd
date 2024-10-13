@@ -2,7 +2,7 @@
 % Please edit documentation in R/abYlm.Mlm.R
 \name{abYlm.Mlm}
 \alias{abYlm.Mlm}
-\title{Adaptive bootstrap for mediation analysis}
+\title{Adaptive Bootstrap for Mediation Analysis with Linear Models}
 \usage{
 abYlm.Mlm(
   S,
@@ -38,13 +38,12 @@ is included, please put it in the first column of X.}
 \item{lambda}{the constant used in the pretest when conducing adaptive bootstrap, default at 2.}
 }
 \value{
-mediation_effect the estimated mediation effect between s and s_star (conditioning on the covariates_new).
+mediation_effect the estimated mediation effect between s and s_star.
 
 p_value the p value.
 }
 \description{
-\code{ab.mediation} is used for testing no mediation effect via adaptive bootstrap under several (generalized)
-linear model.
+\code{abYlm.Mlm} conducts adaptive bootstrap for mediation analysis with linear models on both the mediator M and the outcome Y.
 }
 \examples{
 \dontrun{
@@ -120,5 +119,5 @@ linear model.
 
 }
 \references{
-\url{https://academic.oup.com/jrsssb/advance-article/doi/10.1093/jrsssb/qkad129/7420463}
+He, Y., Song, P. X. K., and Xu, G. (2023), “Adaptive bootstrap tests for composite null hypotheses in the mediation pathway analysis,” Journal of the Royal Statistical Society Series B: Statistical Methodology, qkad129. \url{https://doi.org/10.1093/jrsssb/qkad129}.
 }

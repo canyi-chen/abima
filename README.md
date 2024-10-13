@@ -1,10 +1,10 @@
-
 # abmed
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
-The goal of abmed is to assess whether and how a specific exposure affects the outcome of interest through intermediate variables using adaptive bootstrap. The adaptive method considers the composite structure of no mediation effect, resulting in calibrated type I error and improved statistical power. For more information, refer to He et al. (2024) <doi:10.1093/jrsssb/qkad129>.
+The goal of abmed is to assess whether and how a specific exposure affects the outcome of interest through intermediate variables using adaptive bootstrap. The adaptive method considers the composite structure of no mediation effect, resulting in calibrated type I error and improved statistical power. For more information, refer to He, Y., Song, P. X. K., and Xu, G. (2023), “Adaptive bootstrap tests for composite null hypotheses in the mediation pathway analysis,” Journal of the Royal Statistical Society Series B: Statistical Methodology, qkad129. <https://doi.org/10.1093/jrsssb/qkad129>.
 
 ## Installation
 
@@ -46,7 +46,6 @@ abYlm.Mlm(
 )
 ```
 
-
 ## Example 2
 
 ``` r
@@ -79,10 +78,9 @@ abYlm.Mglm(
 )
 ```
 
-
 ## Example 3
 
-```r
+``` r
 ## Load libraries
 library(abmed)
 
