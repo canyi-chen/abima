@@ -10,7 +10,8 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "100%",
+  cache = TRUE
 )
 ```
 
@@ -65,7 +66,7 @@ abYlm.Mlm(
 ```
 
 
-### Two mediator
+### Two mediators
 
 ```{r}
 library(abmed)
@@ -95,6 +96,8 @@ abYlm.Mlm(
 ```
 
 ## Example 2
+
+This example shows the example for using abYlm.Mglm and how to setup covariates_cfder that you would to condition on. 
 
 ```{r}
 library(abmed)
@@ -130,7 +133,7 @@ abYlm.Mglm(
   M,
   Y,
   X,
-  covariates_cfder = colMeans(X),
+  covariates_cfder = colMeans(X), # the covariates_cfder that you would to condition on
   M.family = M.family,
   B = 199
 )
@@ -138,6 +141,8 @@ abYlm.Mglm(
 
 
 ## Example 3
+
+This exmaple shows that the adaptive bootstrap can control the type I error under the singular null hypothesis.
 
 ```{r}
 ## Load libraries

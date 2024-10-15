@@ -69,7 +69,7 @@ abYlm.Mlm(
 ```
 
 
-### Two mediator
+### Two mediators
 
 ``` r
 library(abmed)
