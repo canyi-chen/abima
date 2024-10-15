@@ -1,8 +1,14 @@
 #' Generate simulated data
 #'
+#'
+#' @importFrom stats rnorm
+#'
 #' @param n the sample size
-#' @param alpha_S the parameter in M~S
-#' @param beta_M the parameter in Y~S+M
+#' @param alpha_S the parameter in M~S+X
+#' @param beta_M the parameter in Y~S+M+X for M
+#' @param tau_S the parameter in Y~S+M+X for S
+#' @param alpha_vec the parameter in M~S+X for X
+#' @param beta_vec the parameter in Y~S+M+X for X
 #' @param M.family a description of the error distribution and link function to be used in the mediator model. This is the
 #' result of a call to a family function. (See \code{\link{family}} for details of family functions.) The default
 #' family is \code{\link{gaussian}}.
