@@ -3,10 +3,10 @@
 #' @description
 #' \code{abYlm.Mlm} conducts adaptive bootstrap for mediation analysis with linear models on both the mediator M and the outcome Y.
 #'
-#' @param S an n-by-1 matrix for exposure.
+#' @param S an n-by-1 vector for exposure.
 #' @param M an n-by-m matrix for mediator, each row corresponding to an observation. The dimension m could be 1 or
 #' larger than 1.
-#' @param Y an n-by-1 matrix for outcome.
+#' @param Y an n-by-1 vector for outcome.
 #' @param X an n-by-p matrix for confounder. Please do not include intercept in X. If you do not have confounder, you do not need specify this parameter.
 #' @param s exposure level, default is 1
 #' @param s_star another exposure level, default is 0

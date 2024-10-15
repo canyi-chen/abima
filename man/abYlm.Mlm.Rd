@@ -7,12 +7,12 @@
 abYlm.Mlm(S, M, Y, X = NULL, s = 1, s_star = 0, B = 199, lambda = 2)
 }
 \arguments{
-\item{S}{an n-by-1 matrix for exposure.}
+\item{S}{an n-by-1 vector for exposure.}
 
 \item{M}{an n-by-m matrix for mediator, each row corresponding to an observation. The dimension m could be 1 or
 larger than 1.}
 
-\item{Y}{an n-by-1 matrix for outcome.}
+\item{Y}{an n-by-1 vector for outcome.}
 
 \item{X}{an n-by-p matrix for confounder. Please do not include intercept in X. If you do not have confounder, you do not need specify this parameter.}
 

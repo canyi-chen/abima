@@ -3,10 +3,9 @@
 #' @description
 #' \code{abYlm.Mglm} conducts adaptive bootstrap for mediation analysis with the generalized linear model on the mediator M and the linear model on the outcome Y. The family of the generalized linear model is specified with \code{M.family}.
 #'
-#' @param S an n-by-1 matrix for exposure.
-#' @param M an n-by-m matrix for mediator, each row corresponding to an observation. The dimension m could be 1 or
-#' larger than 1.
-#' @param Y an n-by-1 matrix for outcome.
+#' @param S an n-by-1 vector for exposure.
+#' @param M an n-by-1 vector for mediator.
+#' @param Y an n-by-1 vector for outcome.
 #' @param X an n-by-p matrix for confounder. Please do not include intercept in X. If you do not have confounder, you do not need specify this parameter.
 #' @param covariates_cfder a vector of confounders you want to condition on, default is zero. The length of this parameter should equal p, the column dimension of X.
 #' @param M.family The error distribution and link function for the mediator model. The default family is \code{gaussian()}.
