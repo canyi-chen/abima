@@ -1,3 +1,3 @@
-# abmediation 0.0.0.9000
+# abmed 0.0.0.9000
 
 * Initial CRAN submission.
