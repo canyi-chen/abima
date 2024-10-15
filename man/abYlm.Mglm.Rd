@@ -57,7 +57,9 @@ p_value the p value.
     library(future.apply)
     plan(multisession, workers = 12)
   } else {
-    future_replicate <- replicate
+    install.packages("future.apply")
+    library(future.apply)
+    plan(multisession, workers = 12)
   }
 
 

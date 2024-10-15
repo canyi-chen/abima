@@ -4,7 +4,7 @@
 #' @importFrom stats rnorm
 #'
 #' @param n the sample size
-#' @param alpha_S the parameter in M~S+X
+#' @param alpha_S the parameter in M~S+X for S
 #' @param beta_M the parameter in Y~S+M+X for M
 #' @param tau_S the parameter in Y~S+M+X for S
 #' @param alpha_vec the parameter in M~S+X for X
@@ -15,8 +15,8 @@
 #' @param Y.family a description of the error distribution and link function to be used in the outcome model. This is the
 #' result of a call to a family function. (See \code{\link{family}} for details of family functions.) The default
 #' family is \code{\link{gaussian}}.
-#' @param sigma_M the noise level for M~S
-#' @param sigma_Y the noise level for Y~S+M
+#' @param sigma_M the noise level for M~S+X
+#' @param sigma_Y the noise level for Y~S+M+X
 #'
 #' @returns A list with the following components:
 #' \item{S}{exposure}
