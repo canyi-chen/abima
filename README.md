@@ -68,6 +68,7 @@ abYlm.Mlm(
 #> [1] "abYlmMlmResult"
 ```
 
+
 ### Two mediator
 
 ``` r

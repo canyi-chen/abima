@@ -42,7 +42,7 @@ library(abmed)
 
 
 ## Set up parameters
-alpha_S <- beta_M <- 1/8
+alpha_S <- beta_M <- 1/6
 
 set.seed(2)
 data <- generate_all_data(
@@ -72,7 +72,7 @@ library(abmed)
 
 
 ## Set up parameters
-alpha_S <- beta_M <- rep(1/8, 2)
+alpha_S <- beta_M <- rep(1/6, 2)
 
 set.seed(2)
 data <- generate_all_data(
@@ -102,7 +102,7 @@ library(abmed)
 
 ## Set up parameters
 M.family <- poisson()
-alpha_S <- beta_M <- 1/20
+alpha_S <- beta_M <- 1/15
 
 set.seed(2)
 data <- generate_all_data(
