@@ -8,3 +8,4 @@
 ^Sim$
 ^.idea$
 ^.archive$
+^README\.Rmd$

@@ -1,20 +1,25 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
 
 # abmed
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
-The goal of abmed is to assess whether and how a specific exposure
-affects the outcome of interest through intermediate variables using
-adaptive bootstrap. The adaptive method considers the composite
-structure of no mediation effect, resulting in calibrated type I error
-and improved statistical power. For more information, refer to He, Y.,
-Song, P. X. K., and Xu, G. (2023), “Adaptive bootstrap tests for
-composite null hypotheses in the mediation pathway analysis,” Journal of
-the Royal Statistical Society Series B: Statistical Methodology,
-qkad129. <https://doi.org/10.1093/jrsssb/qkad129>.
+The goal of abmed is to assess whether and how a specific exposure affects the outcome of interest through intermediate variables using adaptive bootstrap. The adaptive method considers the composite structure of no mediation effect, resulting in calibrated type I error and improved statistical power. For more information, refer to He, Y., Song, P. X. K., and Xu, G. (2023), “Adaptive bootstrap tests for composite null hypotheses in the mediation pathway analysis,” Journal of the Royal Statistical Society Series B: Statistical Methodology, qkad129. <https://doi.org/10.1093/jrsssb/qkad129>.
 
 ## Installation
 
@@ -27,11 +32,9 @@ devtools::install_github("canyi-chen/abmed")
 
 ## Example 1
 
-This is a basic example which shows you how to apply the adaptive
-bootstrap for testing no mediation effect under the classical linear
-structral equation model:
+This is a basic example which shows you how to apply the adaptive bootstrap for testing no mediation effect under the classical linear structral equation model:
 
-``` r
+``` {r}
 library(abmed)
 
 
@@ -56,16 +59,11 @@ abYlm.Mlm(
   X,
   B = 199
 )
-#> $mediation_effect
-#> [1] 0.01697224
-#> 
-#> $p_value
-#> [1] 0.0201005
 ```
 
 ## Example 2
 
-``` r
+```{r}
 library(abmed)
 
 
@@ -93,16 +91,12 @@ abYlm.Mglm(
   M.family = M.family,
   B = 199
 )
-#> $mediation_effect
-#> [1] 0.01793839
-#> 
-#> $p_value
-#> [1] 0.01005025
 ```
+
 
 ## Example 3
 
-``` r
+```{r}
 ## Load libraries
 library(abmed)
 
@@ -114,8 +108,6 @@ if (require(future.apply)) {
   library(future.apply)
   plan(multisession, workers = 12)
 }
-#> Loading required package: future.apply
-#> Loading required package: future
 
 
 ## Set up parameters
@@ -170,4 +162,3 @@ plot(
 abline(0, 1, col = "orange")
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
