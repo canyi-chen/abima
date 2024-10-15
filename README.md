@@ -68,7 +68,6 @@ abYlm.Mlm(
 #> [1] "abYlmMlmResult"
 ```
 
-
 ### Two mediators
 
 ``` r
@@ -107,6 +106,9 @@ abYlm.Mlm(
 ```
 
 ## Example 2
+
+This example shows the example for using abYlm.Mglm and how to setup
+covariates_cfder that you would to condition on.
 
 ``` r
 library(abmed)
@@ -150,7 +152,7 @@ abYlm.Mglm(
   M,
   Y,
   X,
-  covariates_cfder = colMeans(X),
+  covariates_cfder = colMeans(X), # the covariates_cfder that you would to condition on
   M.family = M.family,
   B = 199
 )
@@ -165,6 +167,9 @@ abYlm.Mglm(
 ```
 
 ## Example 3
+
+This exmaple shows that the adaptive bootstrap can control the type I
+error under the singular null hypothesis.
 
 ``` r
 ## Load libraries

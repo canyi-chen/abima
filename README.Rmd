@@ -140,6 +140,7 @@ abYlm.Mglm(
 ```
 
 
+
 ## Example 3
 
 This exmaple shows that the adaptive bootstrap can control the type I error under the singular null hypothesis.
