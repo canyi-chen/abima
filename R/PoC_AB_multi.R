@@ -1,116 +1,120 @@
+# Function to compute coefficient matrix Q for multiple Y using the least squares approach
 Q_function_multi <- function(X, Y) {
   stopifnot(nrow(X) == nrow(Y))
   return(solve(t(X) %*% X, t(X) %*% Y))
 }
 
+# Function to compute the residual (perpendicular) component of Y on X for multiple mediators
 perp_function_multi <- function(X, Y) {
   return(Y - X %*% Q_function_multi(X, Y))
 }
 
-
+# Main PoC adaptive bootstrap function for multiple mediators
+#' @importFrom stats coef resid as.formula lm
 PoC_AB_multi <- function(S, M, Y, X, B = 500, lambda = 2) {
-  data <- data.frame(S = S,
-                     M = M,
-                     Y = Y,
-                     X = X)
-  J <- ncol(M)
-  M_variables <- paste("M", 1:J, sep = "")
+  data <- data.frame(S = S, M = M, Y = Y, X = X)
+  J <- ncol(M)  # Number of mediators
+  M_variables <- paste0("M", 1:J)
 
   p <- ncol(X)
+  colnames(data) <- c("S", M_variables, "Y", paste0("X", 0:(p-1)))
 
-  colnames(data) <- c("S", paste(paste("M", 1:J, sep = "")), "Y", paste(paste("X", 0:(p - 1), sep = "")))
-  med.fit.formula <- stats::as.formula(paste0(
-    "cbind(",
-    paste(paste("M", 1:J, sep = ""), collapse = ","),
-    ")",
-    "~S+",
-    paste(paste("X", 1:(p - 1), sep = ""), collapse = "+")
-  ))
-  out.fit.formula <- stats::as.formula("Y~.-1")
+  # Define the regression formulas
+  med.fit.formula <- as.formula(paste0("cbind(", paste(M_variables, collapse = ","), ") ~ S + ", paste0("X", 1:(p-1), collapse = "+")))
+  out.fit.formula <- as.formula("Y ~ . - 1")
 
   n <- nrow(data)
-  lambda_n <- lambda * sqrt(n) / log(n)
+  lambda_n <- lambda * sqrt(n) / log(n)  # Adaptive lambda parameter
 
-
+  # Helper function for bootstrap resampling
   PoC_AB_help_function <- function(data, ind) {
-    n <- nrow(data)
-    # original data
-    S <- data.matrix(data[, 1])
-    M <- data.matrix(data[, 2:(J + 1)])
-    Y <- data.matrix(data[, J + 2])
+    # Original data
+    S <- data.matrix(data[, "S"])
+    M <- data.matrix(data[, M_variables])
+    Y <- data.matrix(data[, "Y"])
     X <- data.matrix(data[, (J + 3):ncol(data)])
-    med.fit <- stats::lm(med.fit.formula, data = data)
-    out.fit <- stats::lm(out.fit.formula, data = data)
-    eps_M_hat <- stats::resid(med.fit)
-    eps_Y_hat <- matrix(stats::resid(out.fit))
+
+    # Fit models on the original data
+    med.fit <- lm(med.fit.formula, data = data)
+    out.fit <- lm(out.fit.formula, data = data)
+
+    eps_M_hat <- resid(med.fit)
+    eps_Y_hat <- resid(out.fit)
+
     S_perp <- perp_function_multi(X, S)
     M_perp <- perp_function_multi(cbind(X, S), M)
-    sigma_alpha_S_hat <- sqrt(colMeans(eps_M_hat ^ 2) / mean(S_perp ^ 2))
-    sigma_beta_M_hat <- sqrt(mean(eps_Y_hat ^ 2) / colMeans(M_perp ^ 2))
 
+    # Estimate standard deviations
+    sigma_alpha_S_hat <- sqrt(colMeans(eps_M_hat^2) / mean(S_perp^2))
+    sigma_beta_M_hat <- sqrt(mean(eps_Y_hat^2) / colMeans(M_perp^2))
 
-    # boot
-    data_ast <- data[ind, ]
-    S_ast <- data.matrix(data_ast[, 1])
-    M_ast <- data.matrix(data_ast[, 2:(J + 1)])
-    # Y_ast <- data.matrix(data_ast[, J + 2])
+    # Bootstrap resampling
+    data_ast <- data[ind,]
+    S_ast <- data.matrix(data_ast[, "S"])
+    M_ast <- data.matrix(data_ast[, M_variables])
     X_ast <- data.matrix(data_ast[, (J + 3):ncol(data_ast)])
-    med.fit_ast <- stats::lm(med.fit.formula, data = data_ast)
-    out.fit_ast <- stats::lm(out.fit.formula, data = data_ast)
-    X_tilde <- cbind(X, S)
-    eps_M_hat_ast <- matrix(stats::resid(med.fit_ast))
-    eps_Y_hat_ast <- matrix(stats::resid(out.fit_ast))
+
+    # Refit models on the bootstrap sample
+    med.fit_ast <- lm(med.fit.formula, data = data_ast)
+    out.fit_ast <- lm(out.fit.formula, data = data_ast)
+
+    eps_M_hat_ast <- resid(med.fit_ast)
+    eps_Y_hat_ast <- resid(out.fit_ast)
+
     S_perp_ast <- perp_function_multi(X_ast, S_ast)
     M_perp_ast <- perp_function_multi(cbind(X_ast, S_ast), M_ast)
-    sigma_alpha_S_hat_ast <- sqrt(colMeans(eps_M_hat_ast ^ 2) / mean(S_perp_ast ^
-                                                                       2))
-    sigma_beta_M_hat_ast <- sqrt(mean(eps_Y_hat_ast ^ 2) / colMeans(M_perp_ast ^
-                                                                      2))
 
+    sigma_alpha_S_hat_ast <- sqrt(colMeans(eps_M_hat_ast^2) / mean(S_perp_ast^2))
+    sigma_beta_M_hat_ast <- sqrt(mean(eps_Y_hat_ast^2) / colMeans(M_perp_ast^2))
 
     Q_S_ast <- Q_function_multi(X_ast, S_ast)
     Q_M_ast <- Q_function_multi(cbind(X_ast, S_ast), M_ast)
-    X_tilde_ast <- cbind(X_ast, S_ast)
 
-    V_S_ast <- mean(S_perp_ast ^ 2)
-    V_M_ast <- colMeans(M_perp_ast ^ 2)
+    V_S_ast <- mean(S_perp_ast^2)
+    V_M_ast <- colMeans(M_perp_ast^2)
 
-    # The second term should be zero: need to verify
-    Z_S_ast <- sqrt(n) * ((t(eps_M_hat[ind, ]) %*% (S_ast - X_ast %*% Q_S_ast) /
-                             n -
-                             (t(eps_M_hat) %*% (S - X %*% Q_S_ast)) /
-                             n)) / V_S_ast
+    # Calculate residual-based bootstrap statistics
+    Z_S_ast <- sqrt(n) * ((t(eps_M_hat[ind,]) %*% (S_ast - X_ast %*% Q_S_ast) / n -
+                             (t(eps_M_hat) %*% (S - X %*% Q_S_ast)) / n)) / V_S_ast
     Z_M_ast <- sqrt(n) * t((
-      t(eps_Y_hat[ind]) %*% (M_ast - X_tilde_ast %*% Q_M_ast) / n -
-        (t(eps_Y_hat) %*% (M - X_tilde %*% Q_M_ast)) / n
+      t(eps_Y_hat[ind]) %*% (M_ast - cbind(X_ast, S_ast) %*% Q_M_ast) / n -
+        (t(eps_Y_hat) %*% (M - cbind(X, S) %*% Q_M_ast)) / n
     )) / V_M_ast
+
+    # Residual-based interaction
     R_ast <- crossprod(Z_S_ast, Z_M_ast)
 
-    T_alpha_hat <- sqrt(n) * stats::coef(med.fit)['S', ] / sigma_alpha_S_hat
-    T_beta_hat <- sqrt(n) * stats::coef(out.fit)[M_variables] / sigma_beta_M_hat
+    # Compute T statistics
+    T_alpha_hat <- sqrt(n) * coef(med.fit)["S", ] / sigma_alpha_S_hat
+    T_beta_hat <- sqrt(n) * coef(out.fit)[M_variables] / sigma_beta_M_hat
+    T_alpha_hat_ast <- sqrt(n) * coef(med.fit_ast)["S", ] / sigma_alpha_S_hat_ast
+    T_beta_hat_ast <- sqrt(n) * coef(out.fit_ast)[M_variables] / sigma_beta_M_hat_ast
 
-    T_alpha_hat_ast <- sqrt(n) * stats::coef(med.fit_ast)['S', ] / sigma_alpha_S_hat_ast
-    T_beta_hat_ast <- sqrt(n) * stats::coef(out.fit_ast)[M_variables] / sigma_beta_M_hat_ast
-
-
+    # Indicator functions for adaptive adjustments
     I_alpha_ast <- (max(abs(T_alpha_hat_ast)) <= lambda_n) * (max(abs(T_alpha_hat)) <= lambda_n)
     I_beta_ast <- (max(abs(T_beta_hat_ast)) <= lambda_n) * (max(abs(T_beta_hat)) <= lambda_n)
 
-    U_ast <- (crossprod(stats::coef(med.fit_ast)['S', ], stats::coef(out.fit_ast)[M_variables]) -
-                crossprod(stats::coef(med.fit)['S', ], stats::coef(out.fit)[M_variables])) * (1 - I_alpha_ast * I_beta_ast) +
-      n ^ (-1) * R_ast * I_alpha_ast * I_beta_ast
+    # Adjusted bootstrap statistic
+    U_ast <- (crossprod(coef(med.fit_ast)["S", ], coef(out.fit_ast)[M_variables]) -
+                crossprod(coef(med.fit)["S", ], coef(out.fit)[M_variables])) * (1 - I_alpha_ast * I_beta_ast) +
+      n^(-1) * R_ast * I_alpha_ast * I_beta_ast
+
     return(U_ast)
   }
 
+  # Perform the bootstrap
   b <- boot::boot(data, PoC_AB_help_function, R = B)
 
-  med.fit <- stats::lm(med.fit.formula, data = data)
-  out.fit <- stats::lm(out.fit.formula, data = data)
-  alpha_S_hat <- stats::coef(med.fit)['S', ]
-  beta_M_hat <- stats::coef(out.fit)[M_variables]
+  # Estimate the mediation effect from the original data
+  med.fit <- lm(med.fit.formula, data = data)
+  out.fit <- lm(out.fit.formula, data = data)
+  alpha_S_hat <- coef(med.fit)["S", ]
+  beta_M_hat <- coef(out.fit)[M_variables]
   NIE_hat <- crossprod(alpha_S_hat, beta_M_hat)
 
+  # Calculate the p-value
   p_value <- colMeans(sweep(abs(b$t), 2, abs(NIE_hat), ">"))
+
   return(list(
     mediation_effect = NIE_hat,
     p_value = p_value
