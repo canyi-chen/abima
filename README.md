@@ -31,12 +31,14 @@ This is a basic example which shows you how to apply the adaptive
 bootstrap for testing no mediation effect under the classical linear
 structral equation model:
 
+### A single mediator
+
 ``` r
 library(abmed)
 
 
 ## Set up parameters
-alpha_S <- beta_M <- 1/8
+alpha_S <- beta_M <- 1/6
 
 set.seed(2)
 data <- generate_all_data(
@@ -57,10 +59,47 @@ abYlm.Mlm(
   B = 199
 )
 #> $mediation_effect
-#> [1] 0.01697224
+#> [1] 0.03081102
 #> 
 #> $p_value
-#> [1] 0.0201005
+#> [1] 0.01507538
+#> 
+#> attr(,"class")
+#> [1] "abYlmMlmResult"
+```
+
+### Two mediator
+
+``` r
+library(abmed)
+
+
+## Set up parameters
+alpha_S <- beta_M <- rep(1/6, 2)
+
+set.seed(2)
+data <- generate_all_data(
+  n = 200,
+  alpha_S = alpha_S,
+  beta_M = beta_M
+)
+S <- data$S
+M <- data$M
+Y <- data$Y
+X <- data$X
+
+abYlm.Mlm(
+  S,
+  M,
+  Y,
+  X,
+  B = 199
+)
+#> $mediation_effect
+#> [1] 0.03820384
+#> 
+#> $p_value
+#> [1] 0.005025126
 #> 
 #> attr(,"class")
 #> [1] "abYlmMlmResult"
@@ -74,7 +113,7 @@ library(abmed)
 
 ## Set up parameters
 M.family <- poisson()
-alpha_S <- beta_M <- 1/20
+alpha_S <- beta_M <- 1/15
 
 set.seed(2)
 data <- generate_all_data(
@@ -97,7 +136,25 @@ abYlm.Mglm(
   B = 199
 )
 #> $mediation_effect
-#> [1] 0.01793839
+#> [1] 0.02642484
+#> 
+#> $p_value
+#> [1] 0.01005025
+#> 
+#> attr(,"class")
+#> [1] "abYlmMglmResult"
+
+abYlm.Mglm(
+  S,
+  M,
+  Y,
+  X,
+  covariates_cfder = colMeans(X),
+  M.family = M.family,
+  B = 199
+)
+#> $mediation_effect
+#> [1] 0.03110028
 #> 
 #> $p_value
 #> [1] 0.01005025
@@ -176,4 +233,4 @@ plot(
 abline(0, 1, col = "orange")
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
