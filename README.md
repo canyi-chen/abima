@@ -61,6 +61,9 @@ abYlm.Mlm(
 #> 
 #> $p_value
 #> [1] 0.0201005
+#> 
+#> attr(,"class")
+#> [1] "abYlmMlmResult"
 ```
 
 ## Example 2
@@ -98,6 +101,9 @@ abYlm.Mglm(
 #> 
 #> $p_value
 #> [1] 0.01005025
+#> 
+#> attr(,"class")
+#> [1] "abYlmMglmResult"
 ```
 
 ## Example 3
