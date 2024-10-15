@@ -20,9 +20,15 @@ generate_all_data(
 \arguments{
 \item{n}{the sample size}
 
-\item{alpha_S}{the parameter in M~S}
+\item{alpha_S}{the parameter in M~S+X}
 
-\item{beta_M}{the parameter in Y~S+M}
+\item{beta_M}{the parameter in Y~S+M+X for M}
+
+\item{tau_S}{the parameter in Y~S+M+X for S}
+
+\item{alpha_vec}{the parameter in M~S+X for X}
+
+\item{beta_vec}{the parameter in Y~S+M+X for X}
 
 \item{M.family}{a description of the error distribution and link function to be used in the mediator model. This is the
 result of a call to a family function. (See \code{\link{family}} for details of family functions.) The default

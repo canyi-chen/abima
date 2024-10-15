@@ -17,25 +17,24 @@ abYlm.Mlm(
 )
 }
 \arguments{
-\item{S}{a n-by-1 matrix for exposure.}
+\item{S}{an n-by-1 matrix for exposure.}
 
-\item{M}{a n-by-m matrix for mediator, each row corresponding to an observation. The dimension m could be 1 or
+\item{M}{an n-by-m matrix for mediator, each row corresponding to an observation. The dimension m could be 1 or
 larger than 1.}
 
-\item{Y}{a n-by-1 matrix for outcome.}
+\item{Y}{an n-by-1 matrix for outcome.}
 
-\item{X}{a n-by-p matrix for confounder.}
+\item{X}{an n-by-p matrix for confounder.}
 
-\item{intercept}{logical, default at FALSE; if the intercept has been included in the confounder. If the intercept
-is included, please put it in the first column of X.}
+\item{intercept}{logical, default is FALSE; if TRUE, the intercept is included in the confounder matrix X.}
 
-\item{s}{exposure level, default at 1}
+\item{s}{exposure level, default is 1}
 
-\item{s_star}{another exposure level, default at 0}
+\item{s_star}{another exposure level, default is 0}
 
-\item{B}{the number of bootstrap, default at 199}
+\item{B}{the number of bootstrap samples, default is 199}
 
-\item{lambda}{the constant used in the pretest when conducing adaptive bootstrap, default at 2.}
+\item{lambda}{the constant used in the pretest when conducting adaptive bootstrap, default is 2.}
 }
 \value{
 mediation_effect the estimated mediation effect between s and s_star.
