@@ -15,7 +15,9 @@ PoC_AB <- function(S, M, Y, X, B = 500, lambda = 2) {
                      M = M,
                      Y = Y,
                      X = X)
+  n <- nrow(data)
   p <- ncol(X)
+
   colnames(data) <- c("S", "M", "Y", paste(paste("X", 0:(p - 1), sep = "")))
 
   # Define the regression formulas
@@ -24,7 +26,7 @@ PoC_AB <- function(S, M, Y, X, B = 500, lambda = 2) {
   ), sep = ""), collapse = "+")))
   out.fit.formula <- stats::as.formula("Y~.-1")
 
-  n <- nrow(data)
+
   lambda_n <- lambda * sqrt(n) / log(n)  # Adaptive lambda parameter
 
   # Helper function for bootstrap resampling

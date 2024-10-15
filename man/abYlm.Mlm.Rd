@@ -4,17 +4,7 @@
 \alias{abYlm.Mlm}
 \title{Adaptive Bootstrap for Mediation Analysis with Linear Models}
 \usage{
-abYlm.Mlm(
-  S,
-  M,
-  Y,
-  X,
-  intercept = FALSE,
-  s = 1,
-  s_star = 0,
-  B = 199,
-  lambda = 2
-)
+abYlm.Mlm(S, M, Y, X = NULL, s = 1, s_star = 0, B = 199, lambda = 2)
 }
 \arguments{
 \item{S}{an n-by-1 matrix for exposure.}
@@ -24,9 +14,7 @@ larger than 1.}
 
 \item{Y}{an n-by-1 matrix for outcome.}
 
-\item{X}{an n-by-p matrix for confounder.}
-
-\item{intercept}{logical, default is FALSE; if TRUE, the intercept is included in the confounder matrix X.}
+\item{X}{an n-by-p matrix for confounder. Please do not include intercept in X. If you do not have confounder, you do not need specify this parameter.}
 
 \item{s}{exposure level, default is 1}
 
@@ -49,6 +37,7 @@ p_value the p value.
   ## Load libraries
   library(abmed)
 
+  set.seed(2)
   if (require(future.apply)) {
     library(future.apply)
     plan(multisession, workers = 12)
@@ -74,18 +63,11 @@ p_value the p value.
     Y <- data$Y
     X <- data$X
 
-    out <- abYlm.Mlm(
-      S,
-      M,
-      Y,
-      X,
-      lambda = 2,
-      B = 199
-    )
+    out <- abYlm.Mlm(S, M, Y, X, lambda = 2, B = 199)
     out
   }
 
-  set.seed(2)
+
   simulation(1 / 8, 1 / 8)
 
 
@@ -113,9 +95,6 @@ p_value the p value.
   abline(0, 1, col = "orange")
 
 }
-
-
-
 }
 \references{
 He, Y., Song, P. X. K., and Xu, G. (2023), “Adaptive bootstrap tests for composite null hypotheses in the mediation pathway analysis,” Journal of the Royal Statistical Society Series B: Statistical Methodology, qkad129. \url{https://doi.org/10.1093/jrsssb/qkad129}.

@@ -8,14 +8,13 @@ abYlm.Mglm(
   S,
   M,
   Y,
-  X,
+  X = NULL,
+  covariates_cfder = NULL,
   M.family = stats::gaussian(),
-  intercept = FALSE,
   s = 1,
   s_star = 0,
   B = 199,
-  lambda = 2,
-  covariates_new = NULL
+  lambda = 2
 )
 }
 \arguments{
@@ -26,11 +25,11 @@ larger than 1.}
 
 \item{Y}{an n-by-1 matrix for outcome.}
 
-\item{X}{an n-by-p matrix for confounder.}
+\item{X}{an n-by-p matrix for confounder. Please do not include intercept in X. If you do not have confounder, you do not need specify this parameter.}
+
+\item{covariates_cfder}{a vector of confounders you want to condition on, default is zero. The length of this parameter should equal p, the column dimension of X.}
 
 \item{M.family}{The error distribution and link function for the mediator model. The default family is \code{gaussian()}.}
-
-\item{intercept}{logical, default is FALSE; if TRUE, the intercept is included in the confounder matrix X.}
 
 \item{s}{exposure level, default is 1}
 
@@ -39,8 +38,6 @@ larger than 1.}
 \item{B}{the number of bootstrap samples, default is 199}
 
 \item{lambda}{the constant used in the pretest when conducting adaptive bootstrap, default is 2.}
-
-\item{covariates_new}{the level of confounders you want to condition on, default is zero.}
 }
 \value{
 mediation_effect the estimated mediation effect between s and s_star (conditioning on the covariates_new).
@@ -52,100 +49,96 @@ p_value the p value.
 }
 \examples{
 \dontrun{
-## Load libraries
-library(abmed)
+  ## Load libraries
+  library(abmed)
 
-if (require(future.apply)) {
-library(future.apply)
-plan(multisession, workers = 12)
-} else {
-future_replicate <- replicate
+  set.seed(2)
+  if (require(future.apply)) {
+    library(future.apply)
+    plan(multisession, workers = 12)
+  } else {
+    future_replicate <- replicate
+  }
+
+
+  ## Set up parameters
+  M.family <- poisson()
+
+  simulation <- function(alpha_S = 0, beta_M = 0) {
+    data <- generate_all_data(
+      n = 500,
+      alpha_S = alpha_S,
+      beta_M = beta_M,
+      M.family = M.family
+    )
+    S <- data$S
+    M <- data$M
+    Y <- data$Y
+    X <- data$X
+
+    out <- abYlm.Mglm(S,
+                      M,
+                      Y,
+                      X,
+                      M.family = M.family,
+                      lambda = 2,
+                      B = 199)
+    out
+  }
+
+
+  simulation(1 / 8, 1 / 8)
+
+
+  ## Empirical distribution of the p value
+  ## alpha_S = beta_M = 0
+  # the number of replication for approximating the distribution of the p value
+  Nreps <- 200
+  alpha_S <- beta_M <- 0
+  output <- future_replicate(Nreps, simulation(0, 0))
+
+
+  plot(
+    seq(0, 1, 0.01),
+    quantile(unlist(output[2, ]), probs = seq(0, 1, 0.01)),
+    pch = 1,
+    cex = 1.2,
+    cex.lab = 1.3,
+    cex.axis = 1.3,
+    ylab = "Sample Quantiles",
+    xlab = "Theoretical Quantiles",
+    type = "p",
+    xlim = c(0, 1),
+    ylim = c(0, 1),
+    lwd = 1.2
+  )
+  abline(0, 1, col = "orange")
+
+  ## Empirical distribution of the p value
+  ## alpha_S = 1 and beta_M = 0
+  # the number of replication for approximating the distribution of the p value
+  Nreps <- 200
+  alpha_S <- beta_M <- 0
+  output <- future_replicate(Nreps, simulation(1, 0))
+
+
+  plot(
+    seq(0, 1, 0.01),
+    quantile(unlist(output[2, ]), probs = seq(0, 1, 0.01)),
+    pch = 1,
+    cex = 1.2,
+    cex.lab = 1.3,
+    cex.axis = 1.3,
+    ylab = "Sample Quantiles",
+    xlab = "Theoretical Quantiles",
+    type = "p",
+    xlim = c(0, 1),
+    ylim = c(0, 1),
+    lwd = 1.2
+  )
+  abline(0, 1, col = "orange")
+
 }
-
-
-## Set up parameters
-M.family <- poisson()
-
-simulation <- function(alpha_S = 0, beta_M = 0) {
-data <- generate_all_data(
-n = 500,
-alpha_S = alpha_S,
-beta_M = beta_M,
-M.family = M.family
-)
-S <- data$S
-M <- data$M
-Y <- data$Y
-X <- data$X
-
-out <- abYlm.Mglm(
-S,
-M,
-Y,
-X,
-M.family = M.family,
-lambda = 2,
-B = 199
-)
-out
-}
-
-set.seed(2)
-simulation(1 / 8, 1 / 8)
-
-
-## Empirical distribution of the p value
-## alpha_S = beta_M = 0
-# the number of replication for approximating the distribution of the p value
-Nreps <- 200
-alpha_S <- beta_M <- 0
-output <- future_replicate(Nreps, simulation(0, 0))
-
-
-plot(
-seq(0, 1, 0.01),
-quantile(unlist(output[2,]), probs = seq(0, 1, 0.01)),
-pch = 1,
-cex = 1.2,
-cex.lab = 1.3,
-cex.axis = 1.3,
-ylab = "Sample Quantiles",
-xlab = "Theoretical Quantiles",
-type = "p",
-xlim = c(0, 1),
-ylim = c(0, 1),
-lwd = 1.2
-)
-abline(0, 1, col = "orange")
-
-## Empirical distribution of the p value
-## alpha_S = 1 and beta_M = 0
-# the number of replication for approximating the distribution of the p value
-Nreps <- 200
-alpha_S <- beta_M <- 0
-output <-future_replicate(Nreps, simulation(1, 0))
-
-
-plot(
-seq(0, 1, 0.01),
-quantile(unlist(output[2,]), probs = seq(0, 1, 0.01)),
-pch = 1,
-cex = 1.2,
-cex.lab = 1.3,
-cex.axis = 1.3,
-ylab = "Sample Quantiles",
-xlab = "Theoretical Quantiles",
-type = "p",
-xlim = c(0, 1),
-ylim = c(0, 1),
-lwd = 1.2
-)
-abline(0, 1, col = "orange")
-
-}
-
-
-
 }
 \references{
 He, Y., Song, P. X. K., and Xu, G. (2023), “Adaptive bootstrap tests for composite null hypotheses in the mediation pathway analysis,” Journal of the Royal Statistical Society Series B: Statistical Methodology, qkad129. \url{https://doi.org/10.1093/jrsssb/qkad129}.

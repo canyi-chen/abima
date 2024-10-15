@@ -2,6 +2,7 @@
   ## Load libraries
   library(abmed)
 
+  set.seed(2)
   if (require(future.apply)) {
     library(future.apply)
     plan(multisession, workers = 12)
@@ -27,18 +28,11 @@
     Y <- data$Y
     X <- data$X
 
-    out <- abYlm.Mlm(
-      S,
-      M,
-      Y,
-      X,
-      lambda = 2,
-      B = 199
-    )
+    out <- abYlm.Mlm(S, M, Y, X, lambda = 2, B = 199)
     out
   }
 
-  set.seed(2)
+
   simulation(1 / 8, 1 / 8)
 
 
@@ -66,6 +60,3 @@
   abline(0, 1, col = "orange")
 
 }
-
-
-

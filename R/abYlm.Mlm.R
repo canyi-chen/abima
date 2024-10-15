@@ -7,8 +7,7 @@
 #' @param M an n-by-m matrix for mediator, each row corresponding to an observation. The dimension m could be 1 or
 #' larger than 1.
 #' @param Y an n-by-1 matrix for outcome.
-#' @param X an n-by-p matrix for confounder.
-#' @param intercept logical, default is FALSE; if TRUE, the intercept is included in the confounder matrix X.
+#' @param X an n-by-p matrix for confounder. Please do not include intercept in X. If you do not have confounder, you do not need specify this parameter.
 #' @param s exposure level, default is 1
 #' @param s_star another exposure level, default is 0
 #' @param B the number of bootstrap samples, default is 199
@@ -20,7 +19,7 @@
 #' @example man/examples/example_abYlm.Mlm.R
 #'
 #' @export
-abYlm.Mlm <- function(S, M, Y, X, intercept = FALSE, s = 1, s_star = 0, B = 199, lambda = 2) {
+abYlm.Mlm <- function(S, M, Y, X = NULL, s = 1, s_star = 0, B = 199, lambda = 2) {
 
   # ============================================================ #
   # Parameters checking and cleaning
@@ -28,19 +27,20 @@ abYlm.Mlm <- function(S, M, Y, X, intercept = FALSE, s = 1, s_star = 0, B = 199,
   S <- as.matrix(S)
   M <- as.matrix(M)
   Y <- as.matrix(Y)
-  X <- as.matrix(X)
+  # X <- as.matrix(X)
 
   # Check dimensions to ensure matrices have the same number of rows
-  stopifnot(nrow(S) == nrow(M), nrow(M) == nrow(Y), nrow(Y) == nrow(X))
+  stopifnot(nrow(S) == nrow(M), nrow(M) == nrow(Y))
 
   # Ensure scalar exposure and outcome
   stopifnot(ncol(S) == 1, ncol(Y) == 1)
 
-  # Check if intercept is included or needs to be added
-  if (!intercept) {
-    if (all(X[, 1] != 1)) {
-      X <- cbind(1, X)  # Add intercept column if it is not present
-    }
+  if(is.null(X)) {
+    X <- matrix(1, nrow(S), 1)
+  } else {
+    # Check dimensions to ensure matrices have the same number of rows
+    stopifnot(nrow(Y) == nrow(X))
+    X <- cbind(1, as.matrix(X))  # Add intercept column if it is not present
   }
 
   # ============================================================ #
