@@ -1,3 +1,3 @@
-# abmed 1.0
+# abmed 1.1
 
 * Initial CRAN submission.
