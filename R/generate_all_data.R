@@ -18,6 +18,13 @@
 #' @param sigma_M the noise level for M~S+X
 #' @param sigma_Y the noise level for Y~S+M+X
 #'
+#' @examples
+#' out <- generate_all_data(n = 200)
+#' summary(out$S)
+#' summary(out$M)
+#' summary(out$Y)
+#' summary(out$X)
+#'
 #' @returns A list with the following components:
 #' \item{S}{exposure}
 #' \item{M}{mediator}

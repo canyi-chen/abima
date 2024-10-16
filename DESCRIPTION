@@ -1,13 +1,13 @@
 Package: abmed
 Title: Test Mediation Effect via Adaptive Bootstrap with Enhanced Statistical Power
-Version: 0.0.0.9000
+Version: 1.0
 Authors@R: 
-    person("Canyi", "Chen", , "cychen.stats@outlook.com", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-0673-5812"))
-           person("Yinqiu", "He", role = c("aut", "cre"))
-           person("Gongjun", "Xu", role = c("aut", "cre"))
-    person("Peter X.-K.", "Song", , "pxsong@umich.edu", role = c("aut", "cre"))
-Description: Assess whether and how a specific exposure affects the outcome of interest through intermediate variables using adaptive bootstrap. The adaptive method considers the composite structure of no mediation effect, resulting in calibrated type I error and improved statistical power. For more information, refer to He et al. (2024) <doi:10.1093/jrsssb/qkad129>.
+    c(person("Canyi", "Chen", , "cychen.stats@outlook.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-0673-5812")),
+           person("Yinqiu", "He", role = c("aut")),
+           person("Gongjun", "Xu", role = c("aut")),
+    person("Peter X.-K.", "Song", , role = c("aut", "cph")))
+Description: Assess whether and how a specific exposure affects the outcome of interest through intermediate variables using adaptive bootstrap. The adaptive method considers the composite structure of no mediation effect, resulting in calibrated type I error and improved statistical power. For more information, refer to He, Song and Xu (2024) <doi:10.1093/jrsssb/qkad129>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -15,8 +15,9 @@ RoxygenNote: 7.2.3
 Imports: 
     boot,
     stats
-URL: https://github.com/canyi-chen/abmediation
-BugReports: https://github.com/canyi-chen/abmediation/issues
+URL: https://github.com/canyi-chen/abmed
+BugReports: https://github.com/canyi-chen/abmed/issues
 Suggests: 
+    future.apply,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

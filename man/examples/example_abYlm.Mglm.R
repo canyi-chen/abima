@@ -3,7 +3,7 @@
   library(abmed)
 
   set.seed(2)
-  if (require(future.apply)) {
+  if (rlang::is_installed("future.apply")) {
     library(future.apply)
     plan(multisession, workers = 12)
   } else {
@@ -47,7 +47,7 @@
   # the number of replication for approximating the distribution of the p value
   Nreps <- 200
   alpha_S <- beta_M <- 0
-  output <- future_replicate(Nreps, simulation(0, 0))
+  output <- future.apply::future_replicate(Nreps, simulation(0, 0))
 
 
   plot(
@@ -71,7 +71,7 @@
   # the number of replication for approximating the distribution of the p value
   Nreps <- 200
   alpha_S <- beta_M <- 0
-  output <- future_replicate(Nreps, simulation(1, 0))
+  output <- future.apply::future_replicate(Nreps, simulation(1, 0))
 
 
   plot(

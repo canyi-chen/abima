@@ -18,7 +18,13 @@ qkad129. <https://doi.org/10.1093/jrsssb/qkad129>.
 
 ## Installation
 
-You can install the development version of abmed like so:
+You can install the R CRAN version of abmed like so:
+
+``` r
+install.packages("abmed")
+```
+
+and the development version of abmed like so:
 
 ``` r
 # Install abmediation from GitHub:
@@ -175,7 +181,7 @@ error under the singular null hypothesis.
 ## Load libraries
 library(abmed)
 
-if (require(future.apply)) {
+if (rlang::is_installed("future.apply")) {
   library(future.apply)
   plan(multisession, workers = 12)
 } else {
@@ -183,8 +189,6 @@ if (require(future.apply)) {
   library(future.apply)
   plan(multisession, workers = 12)
 }
-#> Loading required package: future.apply
-#> Loading required package: future
 
 
 ## Set up parameters

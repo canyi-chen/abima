@@ -52,3 +52,11 @@ A list with the following components:
 \description{
 Generate simulated data
 }
+\examples{
+out <- generate_all_data(n = 200)
+summary(out$S)
+summary(out$M)
+summary(out$Y)
+summary(out$X)
+
+}

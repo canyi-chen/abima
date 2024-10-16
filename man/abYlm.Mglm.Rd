@@ -52,7 +52,7 @@ p_value the p value.
   library(abmed)
 
   set.seed(2)
-  if (require(future.apply)) {
+  if (rlang::is_installed("future.apply")) {
     library(future.apply)
     plan(multisession, workers = 12)
   } else {
@@ -96,7 +96,7 @@ p_value the p value.
   # the number of replication for approximating the distribution of the p value
   Nreps <- 200
   alpha_S <- beta_M <- 0
-  output <- future_replicate(Nreps, simulation(0, 0))
+  output <- future.apply::future_replicate(Nreps, simulation(0, 0))
 
 
   plot(
@@ -120,7 +120,7 @@ p_value the p value.
   # the number of replication for approximating the distribution of the p value
   Nreps <- 200
   alpha_S <- beta_M <- 0
-  output <- future_replicate(Nreps, simulation(1, 0))
+  output <- future.apply::future_replicate(Nreps, simulation(1, 0))
 
 
   plot(
@@ -142,5 +142,5 @@ p_value the p value.
 }
 }
 \references{
-He, Y., Song, P. X. K., and Xu, G. (2023), “Adaptive bootstrap tests for composite null hypotheses in the mediation pathway analysis,” Journal of the Royal Statistical Society Series B: Statistical Methodology, qkad129. \url{https://doi.org/10.1093/jrsssb/qkad129}.
+He, Y., Song, P. X. K., and Xu, G. (2023), “Adaptive bootstrap tests for composite null hypotheses in the mediation pathway analysis,” Journal of the Royal Statistical Society Series B: Statistical Methodology, qkad129. \url{doi:10.1093/jrsssb/qkad129}.
 }
