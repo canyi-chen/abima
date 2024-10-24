@@ -1,22 +1,20 @@
-#' Generate simulated data
+#' Data simulated from a directed acyclic graph (DAG) model
 #'
+#' @description
+#' Simulate data from a directed acyclic graph (DAG) model.
 #'
 #' @importFrom stats rnorm
 #'
-#' @param n the sample size
-#' @param alpha_S the parameter in M~S+X for S
-#' @param beta_M the parameter in Y~S+M+X for M
-#' @param tau_S the parameter in Y~S+M+X for S
-#' @param alpha_vec the parameter in M~S+X for X
-#' @param beta_vec the parameter in Y~S+M+X for X
-#' @param M.family a description of the error distribution and link function to be used in the mediator model. This is the
-#' result of a call to a family function. (See \code{\link{family}} for details of family functions.) The default
-#' family is \code{\link{gaussian}}.
-#' @param Y.family a description of the error distribution and link function to be used in the outcome model. This is the
-#' result of a call to a family function. (See \code{\link{family}} for details of family functions.) The default
-#' family is \code{\link{gaussian}}.
-#' @param sigma_M the noise level for M~S+X
-#' @param sigma_Y the noise level for Y~S+M+X
+#' @param n a sample size
+#' @param alpha_S a parameter in mediator model M~S+X for S
+#' @param beta_M a parameter in outcome model Y~S+M+X for M
+#' @param tau_S a parameter in outcome model Y~S+M+X for S
+#' @param alpha_vec a parameter vector in mediator model M~S+X for X
+#' @param beta_vec a parameter vector in outcome model Y~S+M+X for X
+#' @param M.family an error distribution and link function to be used in the mediator model. See \code{\link{family}} for details of family functions. The default family is \code{\link{gaussian}}.
+#' @param Y.family an error distribution and link function to be used in the outcome model. See \code{\link{family}} for details of family functions. The default family is \code{\link{gaussian}}.
+#' @param sigma_M the variance of the error term in the mediator model M~S+X
+#' @param sigma_Y the variance of the error term in the outcome model Y~S+M+X
 #'
 #' @examples
 #' out <- generate_all_data(n = 200)

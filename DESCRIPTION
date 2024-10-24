@@ -7,7 +7,7 @@ Authors@R:
            person("Yinqiu", "He", role = c("aut")),
            person("Gongjun", "Xu", role = c("aut")),
     person("Peter X.-K.", "Song", , role = c("aut", "cph")))
-Description: Assess whether and how a specific exposure affects the outcome of interest through intermediate variables using adaptive bootstrap. The adaptive method considers the composite structure of no mediation effect, resulting in calibrated type I error and improved statistical power. For more information, refer to He, Song and Xu (2024) <doi:10.1093/jrsssb/qkad129>.
+Description: Assess whether and how a specific continuous or categorical exposure affects the outcome of interest through one- or multi-dimensional mediators using an  adaptive bootstrap (AB) approach. The AB method allows to make inference for composite null hypotheses of no mediation effect, providing valid type I error control and thus optimizes statistical power. For more technical details, refer to He, Song and Xu (2024) <doi:10.1093/jrsssb/qkad129>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -15,7 +15,7 @@ RoxygenNote: 7.2.3
 Imports: 
     boot,
     stats
-URL: https://github.com/canyi-chen/abima
+URL: https://websites.umich.edu/~songlab/software.html#ABIMA, https://github.com/canyi-chen/abima
 BugReports: https://github.com/canyi-chen/abima/issues
 Suggests: 
     testthat (>= 3.0.0)

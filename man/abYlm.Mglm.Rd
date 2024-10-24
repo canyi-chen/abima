@@ -2,7 +2,7 @@
 % Please edit documentation in R/abYlm.Mglm.R
 \name{abYlm.Mglm}
 \alias{abYlm.Mglm}
-\title{Adaptive Bootstrap for Mediation Analysis with Linear Models and Generalized Linear Models}
+\title{Adaptive Bootstrap Test in Mediation Analysis with Linear Models or Generalized Linear Models}
 \usage{
 abYlm.Mglm(
   S,
@@ -24,35 +24,35 @@ abYlm.Mglm(
 
 \item{Y}{an n-by-1 vector for outcome.}
 
-\item{X}{an n-by-p matrix for confounder. Please do not include intercept in X. If you do not have confounder, you do not need specify this parameter.}
+\item{X}{an n-by-p matrix for p confounders. Do not include intercept in matrix X. In the absence of confounders, matrix is not required to be specified.}
 
-\item{covariates_cfder}{a vector of confounders you want to condition on, default is zero. The length of this parameter should equal p, the column dimension of X.}
+\item{covariates_cfder}{a vector of p confounders to adjust mediation effects, and default is zero (or void). The length of this vector is p, the same as the column dimension of X.}
 
-\item{M.family}{The error distribution and link function for the mediator model. The default family is \code{gaussian()}.}
+\item{M.family}{the error distribution and link function for the mediator model. The default family is \code{gaussian()}.}
 
-\item{s}{exposure level, default is 1}
+\item{s}{exposure level with default set at 1.}
 
-\item{s_star}{another exposure level, default is 0}
+\item{s_star}{baseline exposure level with default set at 0.}
 
-\item{B}{the number of bootstrap samples, default is 199}
+\item{B}{the number of bootstrap samples with default set at 199.}
 
-\item{lambda}{the constant used in the pretest when conducting adaptive bootstrap, default is 2.}
+\item{lambda}{the tuning parameter used in the adaptive bootstrap procedure with default set at 2.}
 }
 \value{
-NIE the estimated mediation effect between s and s_star.
+NIE refers to natural indirect effect, which is the estimated when a change of exposure S occurs from s_star to s.
 
-p_value_NIE the p value for NIE.
+p_value_NIE refers to the AB p value for NIE.
 
-NDE the estimated natural direct effect between s and s_star.
+NDE refers to natural direct effect, which is estimated when exposure S changes from s_star to s.
 
-p_value_NDE the p value for NDE.
+p_value_NDE is the p value for NDE.
 
-NTE the estimated natural total (treatment) effect between s and s_star.
+NTE is the estimated natural total effect when exposure S changes from s_star to s.
 
-p_value_NTE the p value for NTE.
+p_value_NTE is the p value for NTE.
 }
 \description{
-\code{abYlm.Mglm} conducts adaptive bootstrap for mediation analysis with the generalized linear model on the mediator M and the linear model on the outcome Y. The family of the generalized linear model is specified with \code{M.family}.
+\code{abYlm.Mglm} conducts an adaptive bootstrap test in a mediation analysis in which mediator M is modeled by a generalized linear model (GLM) and outcome Y is modeled by a linear model (LM). The family of the generalized linear model is specified according to \code{M.family}.
 }
 \examples{
 \donttest{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/generate_all_data.R
 \name{generate_all_data}
 \alias{generate_all_data}
-\title{Generate simulated data}
+\title{Data simulated from a directed acyclic graph (DAG) model}
 \usage{
 generate_all_data(
   n = 200,
@@ -18,29 +18,25 @@ generate_all_data(
 )
 }
 \arguments{
-\item{n}{the sample size}
+\item{n}{a sample size}
 
-\item{alpha_S}{the parameter in M~S+X for S}
+\item{alpha_S}{a parameter in mediator model M~S+X for S}
 
-\item{beta_M}{the parameter in Y~S+M+X for M}
+\item{beta_M}{a parameter in outcome model Y~S+M+X for M}
 
-\item{tau_S}{the parameter in Y~S+M+X for S}
+\item{tau_S}{a parameter in outcome model Y~S+M+X for S}
 
-\item{alpha_vec}{the parameter in M~S+X for X}
+\item{alpha_vec}{a parameter vector in mediator model M~S+X for X}
 
-\item{beta_vec}{the parameter in Y~S+M+X for X}
+\item{beta_vec}{a parameter vector in outcome model Y~S+M+X for X}
 
-\item{M.family}{a description of the error distribution and link function to be used in the mediator model. This is the
-result of a call to a family function. (See \code{\link{family}} for details of family functions.) The default
-family is \code{\link{gaussian}}.}
+\item{M.family}{an error distribution and link function to be used in the mediator model. See \code{\link{family}} for details of family functions. The default family is \code{\link{gaussian}}.}
 
-\item{Y.family}{a description of the error distribution and link function to be used in the outcome model. This is the
-result of a call to a family function. (See \code{\link{family}} for details of family functions.) The default
-family is \code{\link{gaussian}}.}
+\item{Y.family}{an error distribution and link function to be used in the outcome model. See \code{\link{family}} for details of family functions. The default family is \code{\link{gaussian}}.}
 
-\item{sigma_M}{the noise level for M~S+X}
+\item{sigma_M}{the variance of the error term in the mediator model M~S+X}
 
-\item{sigma_Y}{the noise level for Y~S+M+X}
+\item{sigma_Y}{the variance of the error term in the outcome model Y~S+M+X}
 }
 \value{
 A list with the following components:
@@ -50,7 +46,7 @@ A list with the following components:
 \item{X}{confounder}
 }
 \description{
-Generate simulated data
+Simulate data from a directed acyclic graph (DAG) model.
 }
 \examples{
 out <- generate_all_data(n = 200)

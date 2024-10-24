@@ -2,43 +2,42 @@
 % Please edit documentation in R/abYlm.Mlm.R
 \name{abYlm.Mlm}
 \alias{abYlm.Mlm}
-\title{Adaptive Bootstrap for Mediation Analysis with Linear Models}
+\title{Adaptive Bootstrap Test in Mediation Analysis with Linear Models}
 \usage{
 abYlm.Mlm(S, M, Y, X = NULL, s = 1, s_star = 0, B = 199, lambda = 2)
 }
 \arguments{
 \item{S}{an n-by-1 vector for exposure.}
 
-\item{M}{an n-by-m matrix for mediator, each row corresponding to an observation. The dimension m could be 1 or
-larger than 1.}
+\item{M}{an n-by-m matrix for m mediators, where each row corresponds to a m-element vector of mediators for one subject. The dimension m can be 1 or an integer larger than 1.}
 
 \item{Y}{an n-by-1 vector for outcome.}
 
-\item{X}{an n-by-p matrix for confounder. Please do not include intercept in X. If you do not have confounder, you do not need specify this parameter.}
+\item{X}{an n-by-p matrix for p confounders. Do not include intercept in matrix X. In the absence of confounders, matrix is not required to be specified.}
 
-\item{s}{exposure level, default is 1}
+\item{s}{exposure level with default set at 1.}
 
-\item{s_star}{another exposure level, default is 0}
+\item{s_star}{baseline exposure level with default set at 0.}
 
-\item{B}{the number of bootstrap samples, default is 199}
+\item{B}{the number of bootstrap samples with default set at 199.}
 
-\item{lambda}{the constant used in the pretest when conducting adaptive bootstrap, default is 2.}
+\item{lambda}{the tuning parameter used in the adaptive bootstrap procedure with default set at 2.}
 }
 \value{
-NIE the estimated mediation effect between s and s_star.
+NIE refers to natural indirect effect, which is the estimated when a change of exposure S occurs from s_star to s.
 
-p_value_NIE the p value for NIE.
+p_value_NIE refers to the AB p value for NIE.
 
-NDE the estimated natural direct effect between s and s_star.
+NDE refers to natural direct effect, which is estimated when exposure S changes from s_star to s.
 
-p_value_NDE the p value for NDE.
+p_value_NDE is the p value for NDE.
 
-NTE the estimated natural total (treatment) effect between s and s_star.
+NTE is the estimated natural total effect when exposure S changes from s_star to s.
 
-p_value_NTE the p value for NTE.
+p_value_NTE is the p value for NTE.
 }
 \description{
-\code{abYlm.Mlm} conducts adaptive bootstrap for mediation analysis with linear models on both the mediator M and the outcome Y.
+\code{abYlm.Mlm} performs an adaptive bootstrap test in mediation analysis in which both mediator M and outcome Y are modeled by linear models. The mediators can be multi-dimensional.
 }
 \examples{
 \donttest{

@@ -6,25 +6,26 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of abima is to assess whether and how a specific exposure
-affects the outcome of interest through intermediate variables using
-adaptive bootstrap. The adaptive method considers the composite
-structure of no mediation effect, resulting in calibrated type I error
-and improved statistical power. For more information, refer to He, Y.,
-Song, P. X. K., and Xu, G. (2023), “Adaptive bootstrap tests for
+The goal of abima is to assess whether and how a specific continuous or
+categorical exposure affects the outcome of interest through one- or
+multi-dimensional mediators using an adaptive bootstrap (AB) approach.
+The AB method allows to make inference for composite null hypotheses of
+no mediation effect, providing valid type I error control and thus
+optimizes statistical power. For more technical details, refer to He,
+Y., Song, P. X. K., and Xu, G. (2023), “Adaptive bootstrap tests for
 composite null hypotheses in the mediation pathway analysis,” Journal of
 the Royal Statistical Society Series B: Statistical Methodology,
 qkad129. <https://doi.org/10.1093/jrsssb/qkad129>.
 
 ## Installation
 
-You can install the R CRAN version of abima like so:
+Install the R CRAN version of abima like so:
 
 ``` r
 install.packages("abima")
 ```
 
-and the development version of abima like so:
+or install the development version of abima like so:
 
 ``` r
 # Install abima from GitHub:
@@ -33,11 +34,11 @@ devtools::install_github("canyi-chen/abima")
 
 ## Example 1
 
-This is a basic example which shows you how to apply the adaptive
-bootstrap for testing no mediation effect under the classical linear
-structral equation model:
+This is a single example that shows steps of using the adaptive
+bootstrap (AB) to test for the null hypothesis of no mediation effect
+under the linear structral equation models.
 
-### A single mediator
+### One-dimensional mediator
 
 ``` r
 library(abima)
@@ -86,7 +87,7 @@ abYlm.Mlm(
 #> [1] "abYlmMlmResult"
 ```
 
-### Two mediators
+### Two-dimensional vector of mediators
 
 ``` r
 library(abima)
@@ -137,8 +138,8 @@ abYlm.Mlm(
 
 ## Example 2
 
-This example shows the example for using abYlm.Mglm and how to setup
-covariates_cfder that you would to condition on.
+This example shows the use of abYlm.Mglm function with confounders
+covariates_cfder being included in the mediation analysis.
 
 ``` r
 library(abima)
@@ -222,8 +223,8 @@ abYlm.Mglm(
 
 ## Example 3
 
-This exmaple shows that the adaptive bootstrap can control the type I
-error under the singular null hypothesis.
+This exmaple shows that the performance of adaptive bootstrap test in
+the type I error control under the composite null hypothesis.
 
 ``` r
 ## Load libraries
