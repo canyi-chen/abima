@@ -1,12 +1,12 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# abmed
+# Adaptive Bootstrap Inference for Mediation Analysis (abima)
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of abmed is to assess whether and how a specific exposure
+The goal of abima is to assess whether and how a specific exposure
 affects the outcome of interest through intermediate variables using
 adaptive bootstrap. The adaptive method considers the composite
 structure of no mediation effect, resulting in calibrated type I error
@@ -18,17 +18,17 @@ qkad129. <https://doi.org/10.1093/jrsssb/qkad129>.
 
 ## Installation
 
-You can install the R CRAN version of abmed like so:
+You can install the R CRAN version of abima like so:
 
 ``` r
-install.packages("abmed")
+install.packages("abima")
 ```
 
-and the development version of abmed like so:
+and the development version of abima like so:
 
 ``` r
-# Install abmediation from GitHub:
-devtools::install_github("canyi-chen/abmed")
+# Install abima from GitHub:
+devtools::install_github("canyi-chen/abima")
 ```
 
 ## Example 1
@@ -40,7 +40,7 @@ structral equation model:
 ### A single mediator
 
 ``` r
-library(abmed)
+library(abima)
 
 
 ## Set up parameters
@@ -64,11 +64,23 @@ abYlm.Mlm(
   X,
   B = 199
 )
-#> $mediation_effect
+#> $NIE
 #> [1] 0.03081102
 #> 
-#> $p_value
+#> $p_value_NIE
 #> [1] 0.01507538
+#> 
+#> $NDE
+#> [1] 1.034168
+#> 
+#> $p_value_NDE
+#> [1] 2.535113e-31
+#> 
+#> $NTE
+#> [1] 1.064979
+#> 
+#> $p_value_NTE
+#> [1] 7.724359e-34
 #> 
 #> attr(,"class")
 #> [1] "abYlmMlmResult"
@@ -77,7 +89,7 @@ abYlm.Mlm(
 ### Two mediators
 
 ``` r
-library(abmed)
+library(abima)
 
 
 ## Set up parameters
@@ -101,11 +113,23 @@ abYlm.Mlm(
   X,
   B = 199
 )
-#> $mediation_effect
+#> $NIE
 #> [1] 0.03820384
 #> 
-#> $p_value
+#> $p_value_NIE
 #> [1] 0.005025126
+#> 
+#> $NDE
+#> [1] 1.072573
+#> 
+#> $p_value_NDE
+#> [1] 2.063533e-33
+#> 
+#> $NTE
+#> [1] 1.110776
+#> 
+#> $p_value_NTE
+#> [1] 2.829119e-37
 #> 
 #> attr(,"class")
 #> [1] "abYlmMlmResult"
@@ -117,7 +141,7 @@ This example shows the example for using abYlm.Mglm and how to setup
 covariates_cfder that you would to condition on.
 
 ``` r
-library(abmed)
+library(abima)
 
 
 ## Set up parameters
@@ -144,11 +168,23 @@ abYlm.Mglm(
   M.family = M.family,
   B = 199
 )
-#> $mediation_effect
+#> $NIE
 #> [1] 0.02642484
 #> 
-#> $p_value
+#> $p_value_NIE
 #> [1] 0.01005025
+#> 
+#> $NDE
+#> [1] 1.016851
+#> 
+#> $p_value_NDE
+#> [1] 4.579245e-32
+#> 
+#> $NTE
+#> [1] 1.043276
+#> 
+#> $p_value_NTE
+#> [1] 0
 #> 
 #> attr(,"class")
 #> [1] "abYlmMglmResult"
@@ -162,11 +198,23 @@ abYlm.Mglm(
   M.family = M.family,
   B = 199
 )
-#> $mediation_effect
+#> $NIE
 #> [1] 0.03110028
 #> 
-#> $p_value
+#> $p_value_NIE
 #> [1] 0.01005025
+#> 
+#> $NDE
+#> [1] 1.016851
+#> 
+#> $p_value_NDE
+#> [1] 4.579245e-32
+#> 
+#> $NTE
+#> [1] 1.047951
+#> 
+#> $p_value_NTE
+#> [1] 0
 #> 
 #> attr(,"class")
 #> [1] "abYlmMglmResult"
@@ -179,7 +227,7 @@ error under the singular null hypothesis.
 
 ``` r
 ## Load libraries
-library(abmed)
+library(abima)
 
 if (rlang::is_installed("future.apply")) {
   library(future.apply)
@@ -189,6 +237,7 @@ if (rlang::is_installed("future.apply")) {
   library(future.apply)
   plan(multisession, workers = 12)
 }
+#> Loading required package: future
 
 
 ## Set up parameters

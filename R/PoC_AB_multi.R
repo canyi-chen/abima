@@ -112,11 +112,20 @@ PoC_AB_multi <- function(S, M, Y, X, B = 500, lambda = 2) {
   beta_M_hat <- coef(out.fit)[M_variables]
   NIE_hat <- crossprod(alpha_S_hat, beta_M_hat)
 
+  NDE_hat <- stats::coef(out.fit)['S']
+  p_value_NDE <- summary(out.fit)$coefficients['S', 4]
+
+  NTE.fit.formula <- stats::as.formula(paste0("Y~S+", paste(paste("X", 1:(
+    p - 1
+  ), sep = ""), collapse = "+")))
+  NTE.fit <- stats::lm(NTE.fit.formula, data = data)
+  NTE_hat <- stats::coef(NTE.fit)['S']
+  p_value_NTE <- summary(NTE.fit)$coefficients['S', 4]
+
   # Calculate the p-value
   p_value <- colMeans(sweep(abs(b$t), 2, abs(NIE_hat), ">"))
 
-  return(list(
-    mediation_effect = NIE_hat,
-    p_value = p_value
-  ))
+  return(list(NIE = NIE_hat, p_value_NIE = p_value,
+              NDE = NDE_hat, p_value_NDE = p_value_NDE,
+              NTE = NTE_hat, p_value_NTE = p_value_NTE))
 }

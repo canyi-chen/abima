@@ -38,8 +38,9 @@ compute_stat_GLM_LM <- function(boot_data, M.family, s = 1, s_star = 0, covariat
   ########################################
   #2. fit lm: beta coefficient
   ########################################
+  lm_beta_fit <- stats::lm(outcome_reg_formula, data = boot_data)
   lm_beta_summary <-
-    summary(stats::lm(outcome_reg_formula, data = boot_data))
+    summary(lm_beta_fit)
   result_beta <- lm_beta_summary$coefficients
   beta_hat <- result_beta["mediator", "Estimate"]
   z_beta <- result_beta["mediator", "t value"]
@@ -56,9 +57,16 @@ compute_stat_GLM_LM <- function(boot_data, M.family, s = 1, s_star = 0, covariat
   mediation_estimate <-
     sqrt(n) * as.numeric(beta_hat * d_g_alpha_hat)
 
+  NDE_hat <- stats::coef(lm_beta_fit)['exposure']*(s - s_star)
+  p_value_NDE <- lm_beta_summary$coefficients['exposure', 4]
+
+
   return(
     list(
       me = mediation_estimate,
+      NDE_hat = NDE_hat,
+      p_value_NDE = p_value_NDE,
+      NTE_hat = NDE_hat + mediation_estimate/sqrt(n),
       alpha_residual = alpha_residual,
       beta_residual = beta_residual,
       z_alpha = z_alpha,
@@ -197,7 +205,7 @@ one_ab_bootstrap_GLM_LM <- function(my_data,
       ab_stat <- mediation_est_boot
     }
 
-    return(c(mediation_est_boot, ab_stat))
+    return(c(mediation_est_boot, ab_stat, tmp_boot_res$NTE_hat))
   }
 
   one_boot_res <- boot::boot(my_data, ab_single,
@@ -268,8 +276,15 @@ PoC_AB_GLM_LM <- function(S, M, Y, X, M.family = stats::binomial(link = 'logit')
 
   tmp_p_ab <- mean(one_boot_res$t[, 2] > 0)
   p_value <- 2 * min(tmp_p_ab, 1 - tmp_p_ab)
+
+  tmp_p_b_NTE <- mean(one_boot_res$t[, 3] > 0)
+  p_value_NTE <- 2 * min(tmp_p_b_NTE, 1 - tmp_p_b_NTE)
   return(list(
-    mediation_effect = mediation_estimate,
-    p_value = p_value
+    NIE = mediation_estimate,
+    p_value_NIE = p_value,
+    NDE = tmp_res$NDE,
+    p_value_NDE = tmp_res$p_value_NDE,
+    NTE = tmp_res$NTE,
+    p_value_NTE = p_value_NTE
   ))
 }

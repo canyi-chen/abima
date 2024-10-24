@@ -25,27 +25,27 @@ larger than 1.}
 \item{lambda}{the constant used in the pretest when conducting adaptive bootstrap, default is 2.}
 }
 \value{
-mediation_effect the estimated mediation effect between s and s_star.
+NIE the estimated mediation effect between s and s_star.
 
-p_value the p value.
+p_value_NIE the p value for NIE.
+
+NDE the estimated natural direct effect between s and s_star.
+
+p_value_NDE the p value for NDE.
+
+NTE the estimated natural total (treatment) effect between s and s_star.
+
+p_value_NTE the p value for NTE.
 }
 \description{
 \code{abYlm.Mlm} conducts adaptive bootstrap for mediation analysis with linear models on both the mediator M and the outcome Y.
 }
 \examples{
-\dontrun{
+\donttest{
   ## Load libraries
-  library(abmed)
+  library(abima)
 
   set.seed(2)
-  if (rlang::is_installed("future.apply")) {
-    library(future.apply)
-    plan(multisession, workers = 12)
-  } else {
-    install.packages("future.apply")
-    library(future.apply)
-    plan(multisession, workers = 12)
-  }
 
 
   ## Set up parameters
@@ -72,29 +72,9 @@ p_value the p value.
 
   simulation(1 / 8, 1 / 8)
 
-
-  ## Empirical distribution of the p value
-  # the number of replication for approximating the distribution of the p value
-  Nreps <- 200
-  alpha_S <- beta_M <- 0
-  output <- future.apply::future_replicate(Nreps, simulation(0, 0))
+  simulation(0, 0)
 
 
-  plot(
-    seq(0, 1, 0.01),
-    quantile(unlist(output[2, ]), probs = seq(0, 1, 0.01)),
-    pch = 1,
-    cex = 1.2,
-    cex.lab = 1.3,
-    cex.axis = 1.3,
-    ylab = "Sample Quantiles",
-    xlab = "Theoretical Quantiles",
-    type = "p",
-    xlim = c(0, 1),
-    ylim = c(0, 1),
-    lwd = 1.2
-  )
-  abline(0, 1, col = "orange")
 
 }
 }

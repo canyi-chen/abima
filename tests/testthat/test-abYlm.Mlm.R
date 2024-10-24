@@ -21,8 +21,8 @@ test_that("multiplication works", {
     X,
     B = 199
   )
-  expect_equal(out$p_value, 0.0201005, tolerance = 1e-2)
-  expect_equal(out$mediation_effect, 0.01697224, tolerance = 1e-2)
+  expect_equal(out$p_value_NIE, 0.0201005, tolerance = 1e-2)
+  expect_equal(out$NIE, 0.01697224, tolerance = 1e-2)
 
   ### Test 2
   ## Set up parameters
@@ -46,6 +46,6 @@ test_that("multiplication works", {
     X,
     B = 199
   )
-  expect_equal(out$p_value, 0.05527638, tolerance = 1e-2)
-  expect_equal(out$mediation_effect, 0.01673136, tolerance = 1e-2)
+  expect_equal(out$p_value_NIE, 0.05527638, tolerance = 1e-2)
+  expect_equal(out$NIE, 0.01673136, tolerance = 1e-2)
 })

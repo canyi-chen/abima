@@ -13,8 +13,12 @@
 #' @param B the number of bootstrap samples, default is 199
 #' @param lambda the constant used in the pretest when conducting adaptive bootstrap, default is 2.
 #'
-#' @returns mediation_effect the estimated mediation effect between s and s_star.
-#' @returns p_value the p value.
+#' @returns NIE the estimated mediation effect between s and s_star.
+#' @returns p_value_NIE the p value for NIE.
+#' @returns NDE the estimated natural direct effect between s and s_star.
+#' @returns p_value_NDE the p value for NDE.
+#' @returns NTE the estimated natural total (treatment) effect between s and s_star.
+#' @returns p_value_NTE the p value for NTE.
 #' @references He, Y., Song, P. X. K., and Xu, G. (2023), “Adaptive bootstrap tests for composite null hypotheses in the mediation pathway analysis,” Journal of the Royal Statistical Society Series B: Statistical Methodology, qkad129. <doi:10.1093/jrsssb/qkad129>.
 #' @example man/examples/example_abYlm.Mlm.R
 #'
@@ -56,7 +60,11 @@ abYlm.Mlm <- function(S, M, Y, X = NULL, s = 1, s_star = 0, B = 199, lambda = 2)
   # Return structured output
   # ============================================================ #
   return(structure(list(
-    mediation_effect = as.numeric(out$mediation_effect) * (s - s_star),
-    p_value = out$p_value
+    NIE = as.numeric(out$NIE) * (s - s_star),
+    p_value_NIE = out$p_value_NIE,
+    NDE = as.numeric(out$NDE) * (s - s_star),
+    p_value_NDE = out$p_value_NDE,
+    NTE = as.numeric(out$NTE) * (s - s_star),
+    p_value_NTE = out$p_value_NTE
   ), class = "abYlmMlmResult"))
 }

@@ -1,5 +1,5 @@
-Package: abmed
-Title: Test Mediation Effect via Adaptive Bootstrap with Enhanced Statistical Power
+Package: abima
+Title: Adaptive Bootstrap Inference for Mediation Analysis with Enhanced Statistical Power
 Version: 1.0
 Authors@R: 
     c(person("Canyi", "Chen", , "cychen.stats@outlook.com", role = c("aut", "cre"),
@@ -15,9 +15,8 @@ RoxygenNote: 7.2.3
 Imports: 
     boot,
     stats
-URL: https://github.com/canyi-chen/abmed
-BugReports: https://github.com/canyi-chen/abmed/issues
+URL: https://github.com/canyi-chen/abima
+BugReports: https://github.com/canyi-chen/abima/issues
 Suggests: 
-    future.apply,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

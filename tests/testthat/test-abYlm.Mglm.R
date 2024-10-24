@@ -24,7 +24,7 @@ test_that("multiplication works", {
     M.family = M.family,
     B = 199
   )
-  expect_equal(out$p_value, 0, tolerance = 1e-2)
-  expect_equal(out$mediation_effect, 0.05440099, tolerance = 1e-2)
+  expect_equal(out$p_value_NIE, 0, tolerance = 1e-2)
+  expect_equal(out$NIE, 0.05440099, tolerance = 1e-2)
 
 })

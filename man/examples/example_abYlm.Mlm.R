@@ -1,16 +1,8 @@
-\dontrun{
+\donttest{
   ## Load libraries
-  library(abmed)
+  library(abima)
 
   set.seed(2)
-  if (rlang::is_installed("future.apply")) {
-    library(future.apply)
-    plan(multisession, workers = 12)
-  } else {
-    install.packages("future.apply")
-    library(future.apply)
-    plan(multisession, workers = 12)
-  }
 
 
   ## Set up parameters
@@ -37,28 +29,8 @@
 
   simulation(1 / 8, 1 / 8)
 
-
-  ## Empirical distribution of the p value
-  # the number of replication for approximating the distribution of the p value
-  Nreps <- 200
-  alpha_S <- beta_M <- 0
-  output <- future.apply::future_replicate(Nreps, simulation(0, 0))
+  simulation(0, 0)
 
 
-  plot(
-    seq(0, 1, 0.01),
-    quantile(unlist(output[2, ]), probs = seq(0, 1, 0.01)),
-    pch = 1,
-    cex = 1.2,
-    cex.lab = 1.3,
-    cex.axis = 1.3,
-    ylab = "Sample Quantiles",
-    xlab = "Theoretical Quantiles",
-    type = "p",
-    xlim = c(0, 1),
-    ylim = c(0, 1),
-    lwd = 1.2
-  )
-  abline(0, 1, col = "orange")
 
 }
