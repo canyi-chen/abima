@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(abmed)
+library(abima)
 
-test_check("abmed")
+test_check("abima")

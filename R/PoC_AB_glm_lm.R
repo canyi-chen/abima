@@ -277,6 +277,7 @@ PoC_AB_GLM_LM <- function(S, M, Y, X, M.family = stats::binomial(link = 'logit')
   tmp_p_ab <- mean(one_boot_res$t[, 2] > 0)
   p_value <- 2 * min(tmp_p_ab, 1 - tmp_p_ab)
 
+  # ref: https://www.statmodel.com/download/FAQ-Bootstrap%20-%20Pvalue.pdf
   tmp_p_b_NTE <- mean(one_boot_res$t[, 3] > 0)
   p_value_NTE <- 2 * min(tmp_p_b_NTE, 1 - tmp_p_b_NTE)
   return(list(
