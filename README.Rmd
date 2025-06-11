@@ -40,7 +40,7 @@ devtools::install_github("canyi-chen/abima")
 
 ## Example 1
 
-This is a single example that shows steps of using the adaptive bootstrap (AB) to test for the null hypothesis of no mediation effect under the linear structral equation models.
+This is a single example that shows steps of using the adaptive bootstrap (AB) to test for the null hypothesis of no mediation effect under the linear structural equation models.
 
 ### One-dimensional mediator
 
@@ -149,7 +149,7 @@ abYlm.Mglm(
 
 ## Example 3
 
-This exmaple shows that the performance of adaptive bootstrap test in the type I error control under the composite null hypothesis.
+This example shows that the performance of adaptive bootstrap test in the type I error control under the composite null hypothesis.
 
 ```{r}
 ## Load libraries

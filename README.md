@@ -4,6 +4,7 @@
 # Adaptive Bootstrap Inference for Mediation Analysis (abima)
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
 The goal of abima is to assess whether and how a specific continuous or
@@ -36,12 +37,16 @@ devtools::install_github("canyi-chen/abima")
 
 This is a single example that shows steps of using the adaptive
 bootstrap (AB) to test for the null hypothesis of no mediation effect
-under the linear structral equation models.
+under the linear structural equation models.
 
 ### One-dimensional mediator
 
 ``` r
 library(abima)
+#> Warning: package 'abima' was built under R version 4.4.1
+```
+
+``` r
 
 
 ## Set up parameters
@@ -189,6 +194,9 @@ abYlm.Mglm(
 #> 
 #> attr(,"class")
 #> [1] "abYlmMglmResult"
+```
+
+``` r
 
 abYlm.Mglm(
   S,
@@ -223,7 +231,7 @@ abYlm.Mglm(
 
 ## Example 3
 
-This exmaple shows that the performance of adaptive bootstrap test in
+This example shows that the performance of adaptive bootstrap test in
 the type I error control under the composite null hypothesis.
 
 ``` r
@@ -238,7 +246,11 @@ if (rlang::is_installed("future.apply")) {
   library(future.apply)
   plan(multisession, workers = 12)
 }
+#> Warning: package 'future.apply' was built under R version 4.4.1
 #> Loading required package: future
+```
+
+``` r
 
 
 ## Set up parameters

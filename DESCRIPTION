@@ -1,6 +1,6 @@
 Package: abima
 Title: Adaptive Bootstrap Inference for Mediation Analysis with Enhanced Statistical Power
-Version: 1.0
+Version: 1.1
 Authors@R: 
     c(person("Canyi", "Chen", , "cychen.stats@outlook.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-0673-5812")),
